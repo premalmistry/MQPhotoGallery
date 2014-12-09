@@ -7,6 +7,7 @@
 //
 
 #import "MQGalleryViewController.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 @interface MQGalleryViewController ()
 
@@ -14,13 +15,33 @@
 
 @implementation MQGalleryViewController
 
+#pragma mark - 
+#pragma mark - View controller life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self didPressLink];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+#pragma mark - 
+#pragma mark - Dropbox API's
+
+- (IBAction)didPressLink {
+    if (![[DBSession sharedSession] isLinked]) {
+        [[DBSession sharedSession] linkFromController:self];
+    }
+}
+
+
 
 
 /*
