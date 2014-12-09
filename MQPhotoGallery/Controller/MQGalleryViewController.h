@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MQGalleryViewController.h
 //  MQPhotoGallery
 //
 //  Created by Premal Mistry on 12/9/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface MQGalleryViewController : UIViewController
 
 @end
-
