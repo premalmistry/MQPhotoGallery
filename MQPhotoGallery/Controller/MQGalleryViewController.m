@@ -9,26 +9,31 @@
 #import "MQGalleryViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "PhotoCell.h"
+#import "DisplaySelectedPhotoViewController.h"
+
+#pragma mark -
+#pragma mark - MQGalleryViewController Private Members
 
 @interface MQGalleryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DBRestClientDelegate>
-// Model
 @property (nonatomic, strong) NSMutableArray *fileArray;
 @property (nonatomic, strong) DBRestClient *restClient;
 
-// Outlets
 @property (weak, nonatomic) IBOutlet UICollectionView *photoGallery;
+
 @end
 
+#pragma mark -
+#pragma mark - MQGalleryViewController
 
 @implementation MQGalleryViewController
 
-#pragma mark - 
+#pragma mark -
 #pragma mark - View controller life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initModel];
+    [self setupModel];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -44,7 +49,7 @@
 #pragma mark -
 #pragma mark - Setup
 
-- (void) initModel {
+- (void) setupModel {
     _fileArray = [[NSMutableArray alloc] init];
     [self setupRestClient];
 }
@@ -54,6 +59,9 @@
     [self loadFiles];
 }
 
+- (void) refreshPhotoGallery {
+    [self.photoGallery reloadData];
+}
 
 #pragma mark -
 #pragma mark - UICollectionViewDataSource
@@ -72,8 +80,6 @@
     
     DBMetadata *file = self.fileArray[indexPath.row];
     NSString* localPath = [NSTemporaryDirectory() stringByAppendingPathComponent:file.filename];
-    NSLog(@"File: %@", file.filename);
-    NSLog(@"localPath: %@", localPath);
     
     if ( [[NSFileManager defaultManager] fileExistsAtPath: localPath] ) {
         cell.thumbnail.image = [UIImage imageWithContentsOfFile:localPath];
@@ -82,22 +88,42 @@
     } else {
         if ( file.thumbnailExists ) {
             [self.restClient loadThumbnail:file.path ofSize:@"m" intoPath:localPath];
-
+            
         } else {
             [self.restClient loadFile:file.path intoPath:localPath];
         }
-
+        
         cell.thumbnail.image = nil;
         cell.filename.text = @"Loading...";
     }
+    
+    NSLog(@"Filename: %@", file.filename);
+    NSLog(@"Filepath: %@", localPath);
+    
     return cell;
 }
 
-- (void) refreshPhotoGallery {
-    [self.photoGallery reloadData];
+#pragma mark -
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // Segue from storyboard
 }
 
-#pragma mark - 
+#pragma mark -
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if( [segue.identifier isEqualToString:@"DisplaySelectedPhotoSegue"] ) {
+        DisplaySelectedPhotoViewController* dspvc = (DisplaySelectedPhotoViewController*) segue.destinationViewController;
+        NSIndexPath* indexPath = [self.photoGallery indexPathForCell:sender];
+        DBMetadata* file = self.fileArray[indexPath.row];
+        dspvc.imageFilePath = file.path;
+    }
+}
+
+#pragma mark -
 #pragma mark - Dropbox Setup API's
 
 - (void) linkAppToDropbox {
@@ -119,14 +145,30 @@
 
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
     if (metadata.isDirectory) {
-        NSLog(@"Folder '%@' contains:", metadata.path);
         for (DBMetadata *file in metadata.contents) {
-            [self.fileArray addObject:file];
-            NSLog(@"	%@", file.filename);
+            // Filter only popular image file types
+            if ( [self isImage:file.filename] ) {
+                [self.fileArray addObject:file];
+            }
+            NSLog(@"Filename: %@", file.filename);
         }
     }
     
     [self refreshPhotoGallery];
+}
+
+- (BOOL) isImage: (NSString*) filename {
+    NSString* fileExtension = [[filename pathExtension] lowercaseString];
+    if ([fileExtension isEqualToString:@"png"] ||
+        [fileExtension isEqualToString:@"jpg"] ||
+        [fileExtension isEqualToString:@"jpeg"] ||
+        [fileExtension isEqualToString:@"tiff"] ||
+        [fileExtension isEqualToString:@"tif"] ||
+        [fileExtension isEqualToString:@"bmp"]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - Load file (Dropbox)
@@ -156,17 +198,7 @@
 
 - (void)restClient:(DBRestClient*)client loadThumbnailFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file: %@", error);
-
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

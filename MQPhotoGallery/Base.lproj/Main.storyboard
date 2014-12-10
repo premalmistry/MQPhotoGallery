@@ -50,6 +50,7 @@
                                         <connections>
                                             <outlet property="filename" destination="NWU-YK-Qqh" id="dQf-NC-BaP"/>
                                             <outlet property="thumbnail" destination="oWf-Y4-fqT" id="aa5-hH-V3T"/>
+                                            <segue destination="d9i-8l-g7z" kind="push" identifier="DisplaySelectedPhotoSegue" id="vfg-D1-Bvh"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -62,6 +63,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="MQ Photo Gallery" id="fP4-aZ-F7c">
+                        <barButtonItem key="backBarButtonItem" title="Gallery" id="stS-lc-Adr"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="Ogg-gn-A5H">
                             <connections>
                                 <segue destination="Jap-UE-nHw" kind="push" identifier="TakePictureSegue" id="KVF-Wm-s8X"/>
@@ -88,25 +90,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CI6-8k-tjt">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CI6-8k-tjt">
                                 <rect key="frame" x="16" y="83" width="288" height="401"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDq-fR-LBg">
-                                <rect key="frame" x="254" y="492" width="50" height="30"/>
-                                <state key="normal" title="Upload">
+                                <rect key="frame" x="170" y="492" width="88" height="40"/>
+                                <state key="normal" title="Upload" backgroundImage="button_backgound.png">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="uploadPicture:" destination="Jap-UE-nHw" eventType="touchUpInside" id="kfz-FX-y5l"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYb-e3-zoI">
-                                <rect key="frame" x="16" y="492" width="48" height="30"/>
-                                <state key="normal" title="Retake">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="takePicture:" destination="Jap-UE-nHw" eventType="touchUpInside" id="RSZ-6u-4vs"/>
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="xcL-Pe-QWX">
@@ -120,12 +114,20 @@
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYb-e3-zoI">
+                                <rect key="frame" x="67" y="492" width="88" height="40"/>
+                                <state key="normal" title="Retake" backgroundImage="button_backgound.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="takePicture:" destination="Jap-UE-nHw" eventType="touchUpInside" id="RSZ-6u-4vs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Preview" id="cqo-hR-73d">
-                        <barButtonItem key="backBarButtonItem" title="Gallery" id="dAB-mD-cvI"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Preview" id="cqo-hR-73d"/>
                     <connections>
                         <outlet property="pictureView" destination="CI6-8k-tjt" id="A8Y-MC-iYJ"/>
                         <outlet property="uploadProgressActivityInidicator" destination="xcL-Pe-QWX" id="1iv-aq-Kvs"/>
@@ -134,7 +136,53 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uSc-7m-R9l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1312" y="420"/>
+            <point key="canvasLocation" x="1378" y="129"/>
+        </scene>
+        <!--Photo-->
+        <scene sceneID="hIb-Yj-OKS">
+            <objects>
+                <viewController id="d9i-8l-g7z" customClass="DisplaySelectedPhotoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PP0-Qg-XWD"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZNC-QA-V5G"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GmS-bc-lfs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yf9-aR-TDI">
+                                <rect key="frame" x="11" y="82" width="298" height="437"/>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="qgm-WK-r5V">
+                                <rect key="frame" x="142" y="238" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading file. Please wait..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aae-61-fkx">
+                                <rect key="frame" x="48" y="283" width="225" height="21"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Uj-P7-GhD">
+                                <rect key="frame" x="11" y="527" width="293" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Photo" id="Rr4-8H-P8U"/>
+                    <connections>
+                        <outlet property="filenameLabel" destination="9Uj-P7-GhD" id="XFp-tk-D8Q"/>
+                        <outlet property="loadingImageProgressActivityIndicator" destination="qgm-WK-r5V" id="Wa1-gs-cmr"/>
+                        <outlet property="loadingImageProgressLabel" destination="Aae-61-fkx" id="hIw-bH-xlw"/>
+                        <outlet property="photoImageView" destination="Yf9-aR-TDI" id="fCg-ms-Gwt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E0h-wy-F4f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1378" y="754"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oT7-4W-6n6">
@@ -155,6 +203,9 @@
             <point key="canvasLocation" x="474" y="420"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="button_backgound.png" width="150" height="75"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

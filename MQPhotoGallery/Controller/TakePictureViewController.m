@@ -10,12 +10,19 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <DropboxSDK/DropboxSDK.h>
 
+#pragma mark -
+#pragma mark - TakePictureViewController Private Members
+
 @interface TakePictureViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, DBRestClientDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) DBRestClient *restClient;
+
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *uploadProgressActivityInidicator;
 @property (weak, nonatomic) IBOutlet UILabel *uploadProgressLabel;
 @end
+
+#pragma mark -
+#pragma mark - TakePictureViewController
 
 @implementation TakePictureViewController
 
@@ -69,8 +76,8 @@
         [self presentViewController:picker animated:YES completion:NULL];
         
     } else {
-        // Oops! No camera found on this device, display erroe message to the user
-        // [self showAlert:@"Camera error" message:@"Your device does not support camera."];
+        // Oops! No camera found on this device, display error message to the user
+        [self showAlert:@"Camera error" message:@"Your device does not support camera."];
         [self launchPhotoLibrary];
     }
 }
@@ -101,7 +108,7 @@
         
         // Start animating activity indicator to show the progress of file upload.
         [self showUploadProgress:YES];
-
+        
         // Setup local file path
         NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
         NSString *filename = [NSString stringWithFormat:@"Photo_%@.png", [self currentTime]];
@@ -120,7 +127,7 @@
 - (void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath
               from:(NSString *)srcPath metadata:(DBMetadata *)metadata {
     NSLog(@"File uploaded successfully to path: %@", metadata.path);
-
+    
     [self showUploadProgress:NO];
     [self showAlert:@"Upload successful!" message:@"Your picture is successfully uploaded to Dropbox."];
 }
@@ -145,6 +152,16 @@
 }
 
 #pragma mark -
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ([alertView.title isEqualToString:@"Upload successful!"]) {
+        // Navigate back to Gallery
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark -
 #pragma mark - Utility API's
 
 - (NSString*) currentTime {
@@ -156,13 +173,13 @@
     return [df stringFromDate:today];
 }
 
-// Alernative to SVProgressHUD control
+// Consider SVProgressHUD instead UIAlertView ?
 - (void) showAlert:(NSString*) title message:(NSString*) message {
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 }
 
-// Launch photo library for debugging purpose (on simulator)
+// Launch photo library for debugging purpose (in simulator)
 - (void) launchPhotoLibrary {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.allowsEditing = YES;
@@ -172,22 +189,6 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([alertView.title isEqualToString:@"Upload successful!"]) {
-        // Navigate back to Gallery
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
