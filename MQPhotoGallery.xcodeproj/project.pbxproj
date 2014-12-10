@@ -19,6 +19,8 @@
 		2D36B1AD1A377C7000B354EA /* MQGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D36B1AC1A377C7000B354EA /* MQGalleryViewController.m */; };
 		2D36B1B01A37875800B354EA /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D36B1AF1A37875800B354EA /* PhotoCell.m */; };
 		2D94B73E1A387C8F00911483 /* TakePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94B73D1A387C8F00911483 /* TakePictureViewController.m */; };
+		2D94B7711A38B2BB00911483 /* DisplaySelectedPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94B7701A38B2BB00911483 /* DisplaySelectedPhotoViewController.m */; };
+		2D94B7751A38D30D00911483 /* button_backgound.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D94B7741A38D30D00911483 /* button_backgound.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,9 @@
 		2D36B1AF1A37875800B354EA /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCell.m; path = Controller/PhotoCell.m; sourceTree = "<group>"; };
 		2D94B73C1A387C8F00911483 /* TakePictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TakePictureViewController.h; path = Controller/TakePictureViewController.h; sourceTree = "<group>"; };
 		2D94B73D1A387C8F00911483 /* TakePictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TakePictureViewController.m; path = Controller/TakePictureViewController.m; sourceTree = "<group>"; };
+		2D94B76F1A38B2BB00911483 /* DisplaySelectedPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplaySelectedPhotoViewController.h; path = Controller/DisplaySelectedPhotoViewController.h; sourceTree = "<group>"; };
+		2D94B7701A38B2BB00911483 /* DisplaySelectedPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplaySelectedPhotoViewController.m; path = Controller/DisplaySelectedPhotoViewController.m; sourceTree = "<group>"; };
+		2D94B7741A38D30D00911483 /* button_backgound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_backgound.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +103,7 @@
 			children = (
 				2D36B1A31A377B2300B354EA /* Controller */,
 				2D36B1A21A377AC500B354EA /* Storyboard */,
+				2D94B7721A38D30C00911483 /* resource */,
 				2D36B1881A377A7100B354EA /* Images.xcassets */,
 				2D36B1A61A377BA100B354EA /* Frameworks */,
 				2D36B17B1A377A7100B354EA /* Supporting Files */,
@@ -151,6 +157,8 @@
 				2D36B1AF1A37875800B354EA /* PhotoCell.m */,
 				2D94B73C1A387C8F00911483 /* TakePictureViewController.h */,
 				2D94B73D1A387C8F00911483 /* TakePictureViewController.m */,
+				2D94B76F1A38B2BB00911483 /* DisplaySelectedPhotoViewController.h */,
+				2D94B7701A38B2BB00911483 /* DisplaySelectedPhotoViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -163,6 +171,22 @@
 				2D36B1A41A377B9400B354EA /* DropboxSDK.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2D94B7721A38D30C00911483 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				2D94B7731A38D30D00911483 /* images */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
+		2D94B7731A38D30D00911483 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				2D94B7741A38D30D00911483 /* button_backgound.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D94B7751A38D30D00911483 /* button_backgound.png in Resources */,
 				2D36B1871A377A7100B354EA /* Main.storyboard in Resources */,
 				2D36B18C1A377A7100B354EA /* LaunchScreen.xib in Resources */,
 				2D36B1891A377A7100B354EA /* Images.xcassets in Resources */,
@@ -270,6 +295,7 @@
 				2D94B73E1A387C8F00911483 /* TakePictureViewController.m in Sources */,
 				2D36B1AD1A377C7000B354EA /* MQGalleryViewController.m in Sources */,
 				2D36B17E1A377A7100B354EA /* main.m in Sources */,
+				2D94B7711A38B2BB00911483 /* DisplaySelectedPhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

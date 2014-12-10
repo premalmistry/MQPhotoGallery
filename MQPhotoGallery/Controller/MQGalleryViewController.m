@@ -50,7 +50,6 @@
 #pragma mark - Setup
 
 - (void) setupModel {
-    _fileArray = [[NSMutableArray alloc] init];
     [self setupRestClient];
 }
 
@@ -145,6 +144,7 @@
 
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
     if (metadata.isDirectory) {
+        _fileArray = [[NSMutableArray alloc] init];
         for (DBMetadata *file in metadata.contents) {
             // Filter only popular image file types
             if ( [self isImage:file.filename] ) {
