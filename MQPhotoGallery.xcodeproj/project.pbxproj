@@ -17,6 +17,8 @@
 		2D36B1A81A377BE500B354EA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D36B1A71A377BE500B354EA /* QuartzCore.framework */; };
 		2D36B1AA1A377BF900B354EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D36B1A91A377BF900B354EA /* Security.framework */; };
 		2D36B1AD1A377C7000B354EA /* MQGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D36B1AC1A377C7000B354EA /* MQGalleryViewController.m */; };
+		2D36B1B01A37875800B354EA /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D36B1AF1A37875800B354EA /* PhotoCell.m */; };
+		2D94B73E1A387C8F00911483 /* TakePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94B73D1A387C8F00911483 /* TakePictureViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,10 @@
 		2D36B1A91A377BF900B354EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2D36B1AB1A377C7000B354EA /* MQGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQGalleryViewController.h; path = Controller/MQGalleryViewController.h; sourceTree = "<group>"; };
 		2D36B1AC1A377C7000B354EA /* MQGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQGalleryViewController.m; path = Controller/MQGalleryViewController.m; sourceTree = "<group>"; };
+		2D36B1AE1A37875800B354EA /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoCell.h; path = Controller/PhotoCell.h; sourceTree = "<group>"; };
+		2D36B1AF1A37875800B354EA /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCell.m; path = Controller/PhotoCell.m; sourceTree = "<group>"; };
+		2D94B73C1A387C8F00911483 /* TakePictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TakePictureViewController.h; path = Controller/TakePictureViewController.h; sourceTree = "<group>"; };
+		2D94B73D1A387C8F00911483 /* TakePictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TakePictureViewController.m; path = Controller/TakePictureViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,10 @@
 				2D36B1801A377A7100B354EA /* AppDelegate.m */,
 				2D36B1AB1A377C7000B354EA /* MQGalleryViewController.h */,
 				2D36B1AC1A377C7000B354EA /* MQGalleryViewController.m */,
+				2D36B1AE1A37875800B354EA /* PhotoCell.h */,
+				2D36B1AF1A37875800B354EA /* PhotoCell.m */,
+				2D94B73C1A387C8F00911483 /* TakePictureViewController.h */,
+				2D94B73D1A387C8F00911483 /* TakePictureViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -255,7 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D36B1B01A37875800B354EA /* PhotoCell.m in Sources */,
 				2D36B1811A377A7100B354EA /* AppDelegate.m in Sources */,
+				2D94B73E1A387C8F00911483 /* TakePictureViewController.m in Sources */,
 				2D36B1AD1A377C7000B354EA /* MQGalleryViewController.m in Sources */,
 				2D36B17E1A377A7100B354EA /* main.m in Sources */,
 			);
