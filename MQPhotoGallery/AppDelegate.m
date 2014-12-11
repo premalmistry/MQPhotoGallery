@@ -47,7 +47,7 @@
         return YES;
     }
 
-    // Notify user of this error message
+    // Should we notify user of this error message, perhaps an alert ?
     return NO;
 }
 

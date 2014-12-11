@@ -76,8 +76,10 @@
 #pragma mark - Dropbox Setup API's
 
 - (void) setupRestClient {
-    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    self.restClient.delegate = self;
+    if ( !_restClient && [[DBSession sharedSession] isLinked] ) {
+        _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        _restClient.delegate = self;
+    }
 }
 
 #pragma mark -
