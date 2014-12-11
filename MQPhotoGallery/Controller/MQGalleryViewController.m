@@ -10,6 +10,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "PhotoCell.h"
 #import "DisplaySelectedPhotoViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 #pragma mark -
 #pragma mark - MQGalleryViewController Private Members
@@ -32,13 +33,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setupModel];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [self setupModel];
     [self setupUI];
 }
 
@@ -89,6 +89,7 @@
             [self.restClient loadThumbnail:file.path ofSize:@"m" intoPath:localPath];
             
         } else {
+            // Thumbnail does not exists for this photo, so try to load the original image
             [self.restClient loadFile:file.path intoPath:localPath];
         }
         
@@ -96,8 +97,11 @@
         cell.filename.text = @"Loading...";
     }
     
-    NSLog(@"Filename: %@", file.filename);
-    NSLog(@"Filepath: %@", localPath);
+    cell.layer.borderWidth = 0.5f;
+    cell.layer.borderColor = [UIColor colorWithRed:0.0f green:0.47f blue:1.0f alpha:1.0f].CGColor;
+    
+    // NSLog(@"Filename: %@", file.filename);
+    // NSLog(@"Filepath: %@", localPath);
     
     return cell;
 }
@@ -115,6 +119,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if( [segue.identifier isEqualToString:@"DisplaySelectedPhotoSegue"] ) {
+
         DisplaySelectedPhotoViewController* dspvc = (DisplaySelectedPhotoViewController*) segue.destinationViewController;
         NSIndexPath* indexPath = [self.photoGallery indexPathForCell:sender];
         DBMetadata* file = self.fileArray[indexPath.row];
@@ -132,8 +137,10 @@
 }
 
 - (void) setupRestClient {
-    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    self.restClient.delegate = self;
+    if ( !_restClient && [[DBSession sharedSession] isLinked] ) {
+        _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        _restClient.delegate = self;
+    }
 }
 
 #pragma mark - Listing files (Dropbox)
@@ -151,6 +158,12 @@
                 [self.fileArray addObject:file];
             }
             NSLog(@"Filename: %@", file.filename);
+        }
+
+        // Sort files in descending order based on lastModifiedDate. (Most recent photos first)
+        if ([self.fileArray count]) {
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"lastModifiedDate"  ascending:NO selector:@selector(compare:)];
+            [self.fileArray sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
         }
     }
     
