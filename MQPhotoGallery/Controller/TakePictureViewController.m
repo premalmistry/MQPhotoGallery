@@ -9,6 +9,7 @@
 #import "TakePictureViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <DropboxSDK/DropboxSDK.h>
+#import <QuartzCore/QuartzCore.h>
 
 #pragma mark -
 #pragma mark - TakePictureViewController Private Members
@@ -46,6 +47,10 @@
 
 - (void) setupUI {
     [self showUploadProgress:NO];
+    
+    // Border around UIImageView
+    self.pictureView.layer.borderWidth = 0.5f;
+    self.pictureView.layer.borderColor = [UIColor colorWithRed:0.0f green:0.47f blue:1.0f alpha:1.0f].CGColor;
 }
 
 #pragma mark -
@@ -76,9 +81,13 @@
         [self presentViewController:picker animated:YES completion:NULL];
         
     } else {
+
+#if TARGET_IPHONE_SIMULATOR
+        [self launchPhotoLibrary];
+#else
         // Oops! No camera found on this device, display error message to the user
         [self showAlert:@"Camera error" message:@"Your device does not support camera."];
-        [self launchPhotoLibrary];
+#endif
     }
 }
 
@@ -99,8 +108,10 @@
 #pragma mark -  Upload file (Dropbox API)
 
 - (void) setupRestClient {
-    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    self.restClient.delegate = self;
+    if ( !_restClient && [[DBSession sharedSession] isLinked] ) {
+        _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        _restClient.delegate = self;
+    }
 }
 
 - (void)uploadPictureToDropboxRootFolder {
